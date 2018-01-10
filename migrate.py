@@ -216,7 +216,7 @@ def main(options):
             if resp:
                 gh_issue_url = resp.json()['issue_url']
                 gh_issue_id = int(gh_issue_url.split('/')[-1])
-                assert gh_issue_id == issue['local_id']
+                # assert gh_issue_id == issue['local_id']
         print("Completed {} of {} issues".format(index + 1, len(issues)))
 
 
@@ -520,9 +520,10 @@ def convert_users(content, options):
     def replace_user(match):
         matched = match.group()[1:]
         return '@' + options.users.get(matched, matched)
-
-    return MENTION_RE.sub(replace_user, content)
-
+    try:
+        return MENTION_RE.sub(replace_user, content)
+    except:
+        pass
 
 class GithubMilestones:
     """
